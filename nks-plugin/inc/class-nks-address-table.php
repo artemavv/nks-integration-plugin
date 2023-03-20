@@ -1,6 +1,6 @@
 <?php
 
-class Nks_Address_Table {
+class Nks_Address_Table_Search {
 	
 	protected $table_name = 'nks_addresses';
 	protected $join_table_name = 'nks_address2customer';

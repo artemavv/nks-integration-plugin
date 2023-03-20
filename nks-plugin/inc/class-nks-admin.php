@@ -1,27 +1,27 @@
 <?php
-/**
- * Here is the main working class of plugin.
- *
- */
 
 /**
  * This is the admin class of plugin
  *
  * - renders admin page
+ * - renders customer list
+ * - runs search in customers table
+ * 
  */
 class Nks_Admin {
 
 	protected $db;
 	protected $customer_table;
 	protected $address_table;
+
 	/**
 	 * There are all hooks and actions that need to be set up for plugin to work.
 	 */
 	public function __construct() {
 
 		$this->db = new Nks_dbConnection( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
-		$this->customer_table = new Nks_Customer_Table( $this->db );
-		$this->address_table = new Nks_Address_Table( $this->db );
+		$this->customer_table = new Nks_Customer_Table_Search( $this->db );
+		$this->address_table = new Nks_Address_Table_Search( $this->db );
 		
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ), 10 );
 
@@ -169,23 +169,23 @@ class Nks_Admin {
 					<table class="fl-table">
 							<thead>
 							<tr>
-									<th>ID</th>
-									<th>First name</th>
-									<th>Last name</th>
-									<th>Email</th>
-									<th>Phone</th>
-									<th>Language</th>
+								<th>ID</th>
+								<th>First name</th>
+								<th>Last name</th>
+								<th>Email</th>
+								<th>Phone</th>
+								<th>Language</th>
 							</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($customers as $customer ): ?>
 									<tr>
-											<td><?php echo( $customer->getSdbsUserId() ); ?></td>
-											<td><?php echo( $customer->getFirstName() ); ?></td>
-											<td><?php echo( $customer->getLastName() ); ?></td>
-											<td><?php echo( $customer->getEmailAddress() ); ?></td>
-											<td><?php echo( $customer->getPhoneNumber() ); ?></td>
-											<td><?php echo( $customer->getLanguage() ); ?></td>
+										<td><?php echo( $customer->getSdbsUserId() ); ?></td>
+										<td><?php echo( $customer->getFirstName() ); ?></td>
+										<td><?php echo( $customer->getLastName() ); ?></td>
+										<td><?php echo( $customer->getEmailAddress() ); ?></td>
+										<td><?php echo( $customer->getPhoneNumber() ); ?></td>
+										<td><?php echo( $customer->getLanguage() ); ?></td>
 									</tr>
 									<?php if ( $addresses ): ?>
 										<?php $this->render_address_rows( $customer->getSdbsUserId(), $addresses ); ?>

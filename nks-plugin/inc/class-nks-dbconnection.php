@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Based on David Adams code: https://codeshack.io/super-fast-php-mysql-database-class/
+ */
 class Nks_dbConnection {
 
 	protected $connection;

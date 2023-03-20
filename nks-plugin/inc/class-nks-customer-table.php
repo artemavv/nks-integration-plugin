@@ -1,6 +1,9 @@
 <?php
 
-class Nks_Customer_Table {
+/**
+ * Helper methods to search in the customers table.
+ */
+class Nks_Customer_Table_Search {
 	
 	protected $table_name = 'nks_customers';
 	protected $db;
