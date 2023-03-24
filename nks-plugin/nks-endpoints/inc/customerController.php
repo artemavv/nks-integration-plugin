@@ -7,12 +7,14 @@ class CustomerController {
 	private $db;
 	private $customerTable = 'nks_customers';
 	private $addressTable = 'nks_addresses';
-	private $address2CustomerTable = 'nks_address2customer';
 	private $error_handler = '';
 	
 	public function __construct( $dbConnection, $error_handler ) {
 		$this->error_handler = $error_handler;
 		$this->db = $dbConnection;
+		
+		$this->customerTable = $this->db->prefix . $this->customerTable;
+		$this->addressTable = $this->db->prefix . $this->addressTable;
 	}
 	
 	public function getErrorMessage() {
@@ -80,14 +82,7 @@ class CustomerController {
 		
 		if ( is_array( $customerAddresses ) && count( $customerAddresses ) ) {
 			foreach ( $customerAddresses as $addressData ) {
-				$resultId = $this->insertAddress( $addressData );
-				if ( $resultId ) {
-					$addressIds[] = $resultId;
-				}
-			}
-
-			if ( count( $addressIds ) ) {
-				$this->addAddresses2Customer( $sdbsUserId, $addressIds );
+				$resultId = $this->insertAddress( $addressData, $sdbsUserId );
 			}
 		}
 
@@ -117,20 +112,12 @@ class CustomerController {
 		return 'updateCustomer';
 	}
 	
-	protected function addAddresses2Customer( $sdbsUserId, $addressIds ) {
-		
-		$insertQuery = "INSERT INTO `" . $this->address2CustomerTable . "` ( `sdbsUserId`, `addressId` ) VALUES ( ?, ? )";
-		
-		foreach ( $addressIds as $addressId ) {
-			$this->db->query( $insertQuery, $sdbsUserId, $addressId );
-		}
-	}
-	
-	protected function insertAddress( $addressData ) {
-		$insertQuery = "INSERT INTO `" . $this->addressTable . "` ( `addressId`, `firstName`, `lastName`, `companyName`, `address1`, `address2`, `address3`, `city`, `state`, `zipCode`, `county`, `province`, `country`, `addressee`, `addressType`) "
-			. " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+	protected function insertAddress( $addressData, $sdbsUserId ) {
+		$insertQuery = "INSERT INTO `" . $this->addressTable . "` ( `addressId`, `sdbsUserId`, `firstName`, `lastName`, `companyName`, `address1`, `address2`, `address3`, `city`, `state`, `zipCode`, `county`, `province`, `country`, `addressee`, `addressType`) "
+			. " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
 		
 		$insertResult = $this->db->query( $insertQuery, 
+			$sdbsUserId,
 			$addressData['firstName'],
 			$addressData['lastName'],
 			$addressData['companyName'],

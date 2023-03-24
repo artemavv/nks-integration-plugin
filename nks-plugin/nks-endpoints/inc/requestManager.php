@@ -61,7 +61,7 @@ class RequestManager {
 		$json_data = json_decode( $request_body, JSON_OBJECT_AS_ARRAY  );
 		
 		if ( ! $json_data ) {
-			//$this->abort_on_error( "Cannot parse JSON data. Error code: " . json_last_error(). ' ; Error message: ' . json_last_error_msg() );
+			$this->abort_on_error( "Cannot parse JSON data. Error code: " . json_last_error(). ' ; Error message: ' . json_last_error_msg() );
 		}
 		
 		return $json_data;
@@ -138,109 +138,6 @@ class RequestManager {
 		}
 	}
 
-	public function processOrderRequestTest() {
-		
-		$json_data = $this->init();
-		
-		$request_body = '{
-    "customer" : {
-    "email" :
-    "soa-dev-errors+german_customer1snide@native-instruments.de",
-    "firstName" : "German",
-    "lastName" : "Customer222",
-    "language" : "en"
-    },
-    "order" : {
-    "orderID" : "12591040",
-    "customerReference" : "GermanCustDLNoErrors_1594062693374",
-    "item" : [ {
-    "skuNumber" : "27224",
-    "description" : "Spitfire Audio - Hauschka Composer Toolkit NKS Store",
-    "serialNumbers" : [ {
-            "serialNumber" : "W01K2-35272-8UE25-437B9-D57K6",
-            "serialReference" : "W0120356362968"
-    } ]
-    }, 
-    {
-        "skuNumber" : "27227",
-        "description" : "Spitfire Audio - Olafur Arnalds Chamber Evolutions NKS Store",
-        "serialNumbers" : [ {
-            "serialNumber" : "P78CB-7998F-C444E-4ED49-3U3D7",
-            "serialReference" : "P7820356362975"
-        } ]
-    } ]
-    }
-}';
-		
-		$request_body = '{
-    "customer" : {
-    "email" :
-    "soa-dev-errors+german_customer1snide@native-instruments.de",
-    "firstName" : "German",
-    "lastName" : "Customer1",
-    "language" : "en"
-    },
-    "order" : {
-    "orderID" : "12591045",
-    "customerReference" : "GermanCustDLNoErrors_1594114598842",
-    "item" : [ {
-    "skuNumber" : "27224",
-    "description" : "Spitfire Audio - Hauschka Composer Toolkit NKS Store",
-    "serialNumbers" : [ {
-    "serialNumber" : "W01F2-E434E-823E4-4KD7A-3D954",
-    "serialReference" : "W0120356363002"
-    }, {
-    "serialNumber" : "W01D2-44UEK-CEC9A-44A5B-6C67B",
-    "serialReference" : "W0120356363019"
-    } ]
-    }, {
-    "skuNumber" : "27227",
-    "description" : "Spitfire Audio - Olafur Arnalds Chamber EvolutionsNKS Store",
-    "serialNumbers" : [ {
-    "serialNumber" : "P78BF-CAF9K-B5EEU-4U7F8-7FKU2",
-    "serialReference" : "P7820356363026"
-    }, {
-    "serialNumber" : "P78B3-A49AA-DUE63-4958B-825U2",
-    "serialReference" : "P7820356363033"
-    } ]
-    } ]
-    }
-}';
-
-		$json_data = json_decode( $request_body, JSON_OBJECT_AS_ARRAY  );
-		
-		$controller = new OrderController( $this->db, $this->errorHandler );
-
-		
-		if ( ! $json_data ) {
-			$this->abort_on_error( "55Cannot parse JSON data. Error code: " . json_last_error(). ' ; Error message: ' . json_last_error_msg() );
-		}
-
-		
-		if ( ! isset( $json_data['order'] ) ) {
-			$this->abort_on_error( "Missing 'order' key in JSON array" );
-		}
-		
-		if ( ! isset( $json_data['customer'] ) ) {
-			$this->abort_on_error( "Missing 'customer' key in JSON array" );
-		}
-
-		$orderData = $json_data['order'];
-		$customerData = $json_data['customer'];
-
-		if ( ! $controller->validateOrderData( $orderData, $customerData ) ) {
-			$this->abort_on_error( "Invalid order/customer contents" );
-		}
-		
-		$result = $controller->createOrder( $orderData, $customerData );
-
-		if ( ! $result ) {
-			$this->abort_on_error( "Error while creating order", "HTTP/1.0 500 Internal Server Error", $controller->getErrorMessage() );
-		}
-		else {
-			$this->send_response( $result );
-		}
-	}
 	
 	private function abort_on_error( $message, $code = "HTTP/1.0 400 Bad Request", $additional_message = '' ) {
 		header( $code );

@@ -2,7 +2,7 @@
 /**
 Plugin Name: NKS Integration
 Description: Allows to list & search NKS-imported customers and orders
-Version: 0.1
+Version: 0.2
 Author: Artem Avvakumov
 Author URI: https://artemavv.dev
 Text Domain: nks-int
@@ -27,7 +27,7 @@ if ( ! defined( 'NKSI_PLUGIN_FILE' ) ) {
 }
 
 if ( ! defined( 'NKSI_VERSION' ) ) {
-	define( 'NKSI_VERSION', '0.1' );
+	define( 'NKSI_VERSION', '0.2' );
 }
 
 
