@@ -2,13 +2,15 @@
 
 class Nks_Address_Table_Search {
 	
-	protected $table_name = 'nks_addresses';
-	protected $join_table_name = 'nks_address2customer';
+	protected $table_name;
 	protected $db;
 	
-	
 	public function __construct( $dbConnection ) {	
+
+		global $wpdb;
 		$this->db = $dbConnection;
+		$this->table_name = $wpdb->prefix . 'nks_addresses';
+		
 	}
 	
 	public function find_all() {
@@ -22,7 +24,7 @@ class Nks_Address_Table_Search {
 	
 	public function find_by_customer_id( $customer_id ) {
 		
-		$query = " SELECT a.* from `" . $this->table_name . "` AS a LEFT JOIN `" .  $this->join_table_name  . "` as a2c ON (a.addressId =  a2c.addressId  ) WHERE a2c.sdbsUserId = ? "; 
+		$query = " SELECT * from `" . $this->table_name . "` WHERE sdbsUserId = ? "; 
 		
 		$query_result = $this->db->query( $query, $customer_id );
 		

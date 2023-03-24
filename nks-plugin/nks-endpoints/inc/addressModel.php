@@ -1,8 +1,8 @@
 <?php
 
-class Nks_Address {
+class Address {
 	
-	private $addressId;
+		private $addressId;
     private $firstName;
     private $lastName;
     private $companyName;
@@ -17,42 +17,6 @@ class Nks_Address {
     private $country;
     private $addressee;
     private $addressType;
-
-    private $fields = array(
-        'addressId',
-        'firstName',
-        'lastName',
-        'companyName',
-        'address1',
-        'address2',
-        'address3',
-        'city',
-        'state',
-        'zipCode',
-        'county',
-        'province',
-        'country',
-        'addressee',
-        'addressType'
-    );
-    
-    public function __construct( $data ) {
-        
-        foreach ( $this->fields as $fieldName ) {
-            if ( isset( $data[$fieldName] ) ) {
-                $methodName = 'set' . ucfirst($fieldName);
-                $this->$methodName( $data[$fieldName] );
-            }
-        }
-    }
-    
-    public function toSingleLine() {
-        return $this->addressType . ': ' . $this->firstName . ' ' . $this->lastName . ', '
-            . $this->address1 . '<br>'
-            . $this->address2 . '<br>'
-            . $this->address3 . '<br>'
-            . $this->city . ' ' . $this->state . ' ' . $this->zipCode . ' '; 
-    }
 		
     public function getAddressId() {
         return $this->addressId;
@@ -171,6 +135,6 @@ class Nks_Address {
     }
 
     public function setAddressType($addressType) {
-        $this->addressType = $addressType;
+        $this->addresseType = $addressType;
     }
 }

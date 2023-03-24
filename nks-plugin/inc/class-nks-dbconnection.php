@@ -5,6 +5,8 @@
  */
 class Nks_dbConnection {
 
+	public $prefix;
+	
 	protected $connection;
 	protected $query;
 	protected $show_errors = TRUE;
@@ -14,8 +16,9 @@ class Nks_dbConnection {
 	
 	public $query_count = 0;
 
-	public function __construct($dbhost = 'localhost', $dbuser = 'root', $dbpass = '', $dbname = '', $error_handler = false, $charset = 'utf8') {
+	public function __construct($dbhost = 'localhost', $dbuser = 'root', $dbpass = '', $dbname = '', $error_handler = false, $table_prefix = '', $charset = 'utf8') {
 		
+		$this->prefix = $table_prefix;
 		$this->error_handler = $error_handler;
 	
 		try {
@@ -157,6 +160,7 @@ class Nks_dbConnection {
 			$this->error_handler->handle( $error );
 		}
 		else {
+			header("HTTP/1.0 500 Internal Server Error");
 			print( $error );
 			die();
 		}

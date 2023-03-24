@@ -5,12 +5,15 @@
  */
 class Nks_Customer_Table_Search {
 	
-	protected $table_name = 'nks_customers';
+	protected $table_name;
 	protected $db;
 	
-	
 	public function __construct( $dbConnection ) {	
+
+		global $wpdb;
 		$this->db = $dbConnection;
+		$this->table_name = $wpdb->prefix .  'nks_customers';
+		
 	}
 	
 	public function find_all() {

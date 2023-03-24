@@ -13,28 +13,28 @@ class Nks_Customer {
     private $category;
     private $addressIds = array();
 
-		private $fields = array(
-			'sdbsUserId',
-			'business',
-			'firstName',
-			'lastName',
-			'emailAddress',
-			'phoneNumber',
-			'language',
-			'vatId',
-			'category',
-			'addressIds'
-		);
-		
-		public function __construct( $data ) {
-			
-			foreach ( $this->fields as $fieldName ) {
-				if ( isset( $data[$fieldName] ) ) {
-					$methodName = 'set' . ucfirst($fieldName);
-					$this->$methodName( $data[$fieldName] );
-				}
-			}
-		}
+    private $fields = array(
+        'sdbsUserId',
+        'business',
+        'firstName',
+        'lastName',
+        'emailAddress',
+        'phoneNumber',
+        'language',
+        'vatId',
+        'category',
+        'addressIds'
+    );
+    
+    public function __construct( $data ) {
+        
+        foreach ( $this->fields as $fieldName ) {
+            if ( isset( $data[$fieldName] ) ) {
+                $methodName = 'set' . ucfirst($fieldName);
+                $this->$methodName( $data[$fieldName] );
+            }
+        }
+    }
 		
     public function getSdbsUserId() {
         return $this->sdbsUserId;
