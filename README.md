@@ -1,17 +1,17 @@
 # nks-integration-plugin
-Wordpress plugin allowing to receive data from NKS API. 
+Wordpress plugin allowing to receive data from NKS API via "Order" endpoint and "Customer" endpoint.
 
 See enclosed _NKS_Integration_Requirements.pdf_  for integration details.
 
-* **nks-plugin** folder containds plugins itself.
-* **nks-api** folder contains endpoints for external service to send data to.
-
+* **nks-plugin** folder contains the Wordpress plugin.
+* **nks-plugin/nks-endpoints/** folder contains endpoints for external service to send data to.
+* there are two built-in endpoints: _nks-plugin/nks-endpoints/order-endpoint.php_ and _nks-plugin/nks-endpoints/customer-endpoint.php_ . 
 
 To set up NKS endpoint, follow these steps:
-* place _nks-api_ folder somewhere where is is accessible by HTTPS
-* define username and password for HTTP Basic Auth in _nks-api/requestManager.php_ , method **authenticate()**
-* define DB connection parameters in _nks-api/requestManager.php_ ( start of the file )
-* send some customer info to the endpoint, in the JSON format (explained in _NKS_Integration_Requirements.pdf_ ). 
+* install nks-plugin as standard Wordpress plugin ( place _nks-plugin_ folder into _wp-content/plugins_ folder and activate this plugin in Wordpress admin panel )
+* define username and password for HTTP Basic Auth in _nks-plugin/nks-endpoints/inc/requestManager.php_ , method **authenticate()**
+* send some customer info to the Customer endpoint, in the JSON format (explained in _NKS_Integration_Requirements.pdf_ ). 
+* go to **Tools** -> NKS Customers and check that you see here a list of customers from the DB.
 
 Here is an example of CURL request to create a test customer entry ( change here endpoint URL and auth string ): 
 
@@ -69,7 +69,4 @@ Here is an example of CURL request to create a test customer entry ( change here
 }
 }'`
 
-To install Wordpress plugin, follow these steps:
-* place _nks-plugin_ folder into _wp-content/plugins_ folder
-* activate this plugin in Wordpress admin panel
-* go to **Tools** -> NKS Customers and check that you see here a list of customers from the DB.
+
