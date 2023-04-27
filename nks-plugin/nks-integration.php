@@ -2,7 +2,7 @@
 /**
 Plugin Name: NKS Integration
 Description: Allows to list & search NKS-imported customers and orders
-Version: 0.2
+Version: 0.1
 Author: Artem Avvakumov
 Author URI: https://artemavv.dev
 Text Domain: nks-int
@@ -27,7 +27,7 @@ if ( ! defined( 'NKSI_PLUGIN_FILE' ) ) {
 }
 
 if ( ! defined( 'NKSI_VERSION' ) ) {
-	define( 'NKSI_VERSION', '0.2' );
+	define( 'NKSI_VERSION', '0.1' );
 }
 
 
@@ -63,13 +63,13 @@ function nks_init_db() {
 
 		$orderSql = "CREATE TABLE `$orderTable` (
 			`orderId` int NOT NULL PRIMARY KEY,
-			`customerEmail` varchar(255) NOT NULL,
-			`firstName` varchar(255) NOT NULL,
-			`lastName` varchar(255) NOT NULL,
-			`language` varchar(255) NOT NULL,
-			`customerReference` varchar(255) NOT NULL,
-			`itemsJson` text NOT NULL,
-			`itemSkuNumbers` text NOT NULL
+			`customerEmail` varchar(255) NULL,
+			`firstName` varchar(255) NULL,
+			`lastName` varchar(255) NULL,
+			`language` varchar(255) NULL,
+			`customerReference` varchar(255) NULL,
+			`itemsJson` text NULL,
+			`itemSkuNumbers` text NULL
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 		// Create orders table
@@ -85,11 +85,11 @@ function nks_init_db() {
 		$customerSql = "CREATE TABLE `$customerTable` (
 			`sdbsUserId` int NOT NULL PRIMARY KEY,
 			`business` int DEFAULT NULL,
-			`firstName` varchar(255) NOT NULL,
-			`lastName` varchar(255) NOT NULL,
-			`emailAddress` varchar(255) NOT NULL,
-			`phoneNumber` varchar(255) NOT NULL,
-			`language` varchar(255) NOT NULL,
+			`firstName` varchar(255) NULL,
+			`lastName` varchar(255) NULL,
+			`emailAddress` varchar(255) NULL,
+			`phoneNumber` varchar(255) NULL,
+			`language` varchar(255) NULL,
 			`vatId` varchar(255) DEFAULT NULL,
 			`category` varchar(255) DEFAULT NULL
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
