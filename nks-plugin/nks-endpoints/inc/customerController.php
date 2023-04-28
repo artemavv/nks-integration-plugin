@@ -32,15 +32,13 @@ class CustomerController {
 	}
 
 	public function validateCustomerData( $customerData ) {
-		if ( isset( $customerData['firstName'] ) 
-			&& isset( $customerData['lastName'] )
-			&& isset( $customerData['emailAddress'] )
-			&& isset( $customerData['phoneNumber'] )
-			) {
+		if ( isset( $customerData['sdbsUserId'] ) ) {
 			return true;
 		}
-
-		return false;
+    else {
+      $error_message = 'Field "sdbsUserId" in the customer data not set';
+      return $error_message;
+    }
 	}
 	
 	public function getCustomerById( $sdbsUserId ) {

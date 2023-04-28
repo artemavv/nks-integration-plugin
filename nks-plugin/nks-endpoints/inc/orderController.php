@@ -46,8 +46,6 @@ class OrderController {
 	}
 	
 	public function insertOrder( $orderData, $customerData ) {
-		//echo('<pre>' . print_r($customerData, 1) . '</pre>');
-		//echo('<pre>' . print_r($orderData, 1) . '</pre>');die();
 		
 		$itemsData = $this->parseItems( $orderData['item'] );
     $itemSkuNumbers = $this->getSkuNumbers( $itemsData );
@@ -101,31 +99,27 @@ class OrderController {
 
 	public function validateOrderData( $orderData, $customerData ) {
 		
-		if ( isset( $orderData["orderID"] ) 
-			&& isset( $orderData["customerReference"] )
-			&& isset( $orderData["item"] )
-			&& isset( $customerData["firstName"] )
-			&& isset( $customerData["lastName"] )
-			&& isset( $customerData["email"] )
-			) {
+		if ( isset( $orderData["orderID"] ) ) {
 			return true;
 		}
-
-		return false;
+    else {
+      $error_message = 'Field "orderID" is not set';
+      return $error_message;
+    }
 	}
 
-    private function parseItems( $rawItems ) {
-        return $rawItems; // so far, no processing required
-    }
+  private function parseItems( $rawItems ) {
+      return $rawItems; // so far, no processing required
+  }
 
-    private function getSkuNumbers( $items ) {
-        $itemSkuNumbers = '';
-				
-				foreach ( $items as $item ) {
-					$itemSkuNumbers .= '[[' . $item['skuNumber'] . ']]';
-				}
-				
-        return $itemSkuNumbers;
-    }
+  private function getSkuNumbers( $items ) {
+      $itemSkuNumbers = '';
+
+      foreach ( $items as $item ) {
+        $itemSkuNumbers .= '[[' . $item['skuNumber'] . ']]';
+      }
+
+      return $itemSkuNumbers;
+  }
 	
 }

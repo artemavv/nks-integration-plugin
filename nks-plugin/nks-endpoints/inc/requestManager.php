@@ -88,8 +88,10 @@ class RequestManager {
 		$orderData = $json_data['order'];
 		$customerData = $json_data['customer'];
 
-		if ( ! $controller->validateOrderData( $orderData, $customerData ) ) {
-			$this->abort_on_error( "Invalid order/customer contents" );
+    	$result = $controller->validateOrderData( $orderData, $customerData );
+
+		if ( $result !== true ) {
+			$this->abort_on_error( "Invalid order/customer contents. " . $result );
 		}
 		
 		$result = $controller->createOrder( $orderData, $customerData );
@@ -124,8 +126,10 @@ class RequestManager {
 			$customerAddresses[] = $addr['location'];
 		}
 
-		if ( ! $controller->validateCustomerData( $customerData ) ) {
-			$this->abort_on_error( "Invalid customerDetails contents" );
+    	$result = $controller->validateCustomerData( $customerData );
+    
+		if ( $result !== true ) {
+			$this->abort_on_error( "Invalid customerDetails contents. " . $result );
 		}
 		
 		$result = $controller->createCustomer( $customerData['sdbsUserId'], $customerData, $customerAddresses );
