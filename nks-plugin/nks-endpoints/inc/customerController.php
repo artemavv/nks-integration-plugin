@@ -74,13 +74,9 @@ class CustomerController {
 			return false;
 		}
 		
-		$sdbsUserId = $this->db->lastInsertID();
-		
-		$addressIds = array();
-		
 		if ( is_array( $customerAddresses ) && count( $customerAddresses ) ) {
 			foreach ( $customerAddresses as $addressData ) {
-				$resultId = $this->insertAddress( $addressData, $sdbsUserId );
+				$resultId = $this->insertAddress( $addressData, $customerData['sdbsUserId'] );
 			}
 		}
 
