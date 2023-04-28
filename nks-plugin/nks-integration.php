@@ -2,7 +2,7 @@
 /**
 Plugin Name: NKS Integration
 Description: Allows to list & search NKS-imported customers and orders
-Version: 0.1
+Version: 0.3
 Author: Artem Avvakumov
 Author URI: https://artemavv.dev
 Text Domain: nks-int
@@ -27,7 +27,7 @@ if ( ! defined( 'NKSI_PLUGIN_FILE' ) ) {
 }
 
 if ( ! defined( 'NKSI_VERSION' ) ) {
-	define( 'NKSI_VERSION', '0.1' );
+	define( 'NKSI_VERSION', '0.3' );
 }
 
 
@@ -107,9 +107,9 @@ function nks_init_db() {
 
 		$addressSql = "CREATE TABLE `$addressTable` (
 			`addressId` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-			`sdbsUserId` int NOT NULL,
-			`firstName` varchar(255) NOT NULL,
-			`lastName` varchar(255) NOT NULL,
+			`sdbsUserId` int DEFAULT NULL,
+			`firstName` varchar(255) DEFAULT NULL,
+			`lastName` varchar(255) DEFAULT NULL,
 			`companyName` varchar(255)  DEFAULT NULL,
 			`address1` varchar(255)  DEFAULT NULL,
 			`address2` varchar(255)  DEFAULT NULL,
@@ -121,7 +121,7 @@ function nks_init_db() {
 			`province` varchar(255)  DEFAULT NULL,
 			`country` varchar(255)  DEFAULT NULL,
 			`addressee` varchar(255) DEFAULT NULL,
-			`addressType` varchar(255) NOT NULL
+			`addressType` varchar(255) DEFAULT NULL
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 		// Create customers table
