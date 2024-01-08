@@ -2,7 +2,7 @@
 /**
 Plugin Name: NKS Integration
 Description: Allows to list & search NKS-imported customers and orders
-Version: 0.3
+Version: 0.3.1
 Author: Artem Avvakumov
 Author URI: https://artemavv.dev
 Text Domain: nks-int
