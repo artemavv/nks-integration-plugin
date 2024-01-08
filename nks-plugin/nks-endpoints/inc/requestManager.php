@@ -120,13 +120,18 @@ class RequestManager {
 
 		$customerData = $json_data['customerDetails'];
 
+    // special case for missing sdbsUserId
+    if ( ( ! isset( $customerData['sdbsUserId'] ) || $customerData['sdbsUserId'] == "")  && isset( $customerData['emailAddress'] ) ) { 
+      $customerData['sdbsUserId'] = $customerData['emailAddress'];
+    }
+    
 		$customerAddresses = array();
 
 		foreach ( $json_data['addresses']['address'] as $addr) {
 			$customerAddresses[] = $addr['location'];
 		}
 
-    	$result = $controller->validateCustomerData( $customerData );
+    $result = $controller->validateCustomerData( $customerData );
     
 		if ( $result !== true ) {
 			$this->abort_on_error( "Invalid customerDetails contents. " . $result );
