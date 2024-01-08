@@ -121,8 +121,8 @@ class RequestManager {
 		$customerData = $json_data['customerDetails'];
 
     // special case for missing sdbsUserId
-    if ( ( ! isset( $customerData['sdbsUserId'] ) || $customerData['sdbsUserId'] == "")  && isset( $customerData['emailAddress'] ) ) { 
-      $customerData['sdbsUserId'] = $customerData['emailAddress'];
+    if ( ! isset( $customerData['sdbsUserId'] ) || $customerData['sdbsUserId'] == "" ) { 
+      $customerData['sdbsUserId'] = time(); 
     }
     
 		$customerAddresses = array();
